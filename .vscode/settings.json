@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.windows": {
+        "PATH": "C:\\Users\\LDOMNIC\\.platformio\\penv\\Scripts;C:\\Users\\LDOMNIC\\.platformio\\penv;C:\\Program Files (x86)\\Google\\Chrome\\Application;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\nodejs\\;C:\\Users\\LDOMNIC\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\LDOMNIC\\AppData\\Local\\Programs\\Fiddler;C:\\Users\\LDOMNIC\\AppData\\Roaming\\npm;C:\\Program Files (x86)\\Google\\Chrome\\Application;C:\\ProgramData\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\nodejs\\;C:\\Users\\LDOMNIC\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\LDOMNIC\\AppData\\Local\\Programs\\Fiddler;C:\\Users\\LDOMNIC\\AppData\\Roaming\\npm",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
