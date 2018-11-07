@@ -4,7 +4,7 @@
 
   The MIT License (MIT)
   Copyright (c) 2018 lukx
-  
+
   Permission is hereby granted, free of charge, to any person
   obtaining a copy of this software and associated documentation files
   (the "Software"), to deal in the Software without restriction,
@@ -35,6 +35,7 @@
 #define myMQTT_PASSWORD nullptr
 #endif
 
+
 const char *ssid = mySSID;
 const char *password = myWIFIPASSWD;
 const char *mqttBroker = myMQTT_BROCKER;
@@ -44,7 +45,15 @@ const char *mqttPassword = myMQTT_PASSWORD;
 #define BUTTON_1 0
 #define BUTTON_2 1
 
-const int GPIO[] = {0, 2};
+#define PAYLOAD_HIGH "off"
+#define PAYLOAD_LOW "on"
+const int GPIO[] = {3, 2};
+
+// we will set a reference value (LOW) to the RX pin,
+// because if we would boot with one of the GPIOs connected
+// to GND (=low), the ESP would start in flash or another mode
+// this way, I can pull the reference current on RX pin later.
+const int REFERENCE_CURRENT_PIN = 0;
 
 int lastKnownStates[] = {-1, -1};
 
@@ -55,8 +64,6 @@ const String chipName = String("ESP01_") + String(ESP.getChipId(), HEX);
 
 const String globalTopic = "mqttswitch";
 const String chipTopic = globalTopic + String("/") + chipName;
-const String payloadHigh = String("on");
-const String payloadLow = String("off");
 
 bool logMode = false;
 
@@ -104,8 +111,8 @@ void gpioChangeCallback(const int button, const bool isHigh) {
   Serial.println();
 
   const String buttonTopic = chipTopic + String("/") + String(button);
-  mqtt.publish(buttonTopic.c_str(), isHigh ? "1":"0", true);
-  
+  const String payload = (isHigh ? PAYLOAD_HIGH : PAYLOAD_LOW);
+  mqtt.publish(buttonTopic.c_str(), payload.c_str(), true);
 }
 
 void reconnect() {
@@ -133,9 +140,16 @@ void setup() {
   setupWifi();
   mqtt.setServer(mqttBroker, 1883);
   mqtt.setCallback(mqttCallback);
- 
+  
+  // make the RX pin a normal GPIO
+  pinMode(3, FUNCTION_3);
+
   pinMode(GPIO[BUTTON_1], INPUT);
   pinMode(GPIO[BUTTON_2], INPUT);
+
+  // see the comment at the declaration of REFERENCE_CURRENT_PIN
+  pinMode(REFERENCE_CURRENT_PIN, OUTPUT);
+  digitalWrite(REFERENCE_CURRENT_PIN, LOW);
 }
 
 void processButton(int button) {
